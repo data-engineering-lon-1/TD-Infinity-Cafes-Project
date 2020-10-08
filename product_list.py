@@ -80,6 +80,7 @@ def read_orders_from_csv(csv_file):
         #print(product)
     return final_product_list
 
+#TODO 
 #In order to check the for duplicates in the database, first import all the data into an array
 # as done before, loop through the data you want to add and check if it already is present
 #if the data is not in the database, append to the database array 
