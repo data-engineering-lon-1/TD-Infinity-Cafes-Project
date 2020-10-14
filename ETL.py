@@ -4,22 +4,32 @@ import mysql.connector
 import numpy
 from dotenv import load_dotenv
 load_dotenv()
+file_a = 'mainfile.csv'
 
 def read_unf(csvfile):
     colnames=['date_time', 'location', 'name', 'basket', 'payment_type', 't_price', 'payment_info']
-    df=pd.read_csv(csvfile, names=colnames,header=None, encoding = "utf-8")
+    try:
+        df=pd.read_csv(csvfile, names=colnames,header=None, encoding = "utf-8")
+    except:
+        print("ERROR: csv file cannot be found")
+
     #ASSIGNING RANDOM ID'S FOR EACH TRANSACTION
     df['tsac_id']=[uuid.uuid4() for _ in range(len(df.index))] #df.index 
     df['date_time'] = pd.to_datetime(df['date_time'])
+    #df.index = df['date_time']
+
     return df
+
+df=read_unf(file_a)
 
 def concat(csvfile):
     #EXTRACTING THE BASKET AND SPLITTING THE CONTENTS INTO THE SEPARATE ITEMS INSIDE THE BASKET
-    df=read_unf(csvfile)
     basket_contents=pd.concat([df[['tsac_id']], df['basket'].str.split(',', expand=True)], axis=1)
+
     return basket_contents
 
 def read_basket_from_csv(csvfile):
+
     basket_contents=concat(csvfile)
     #MAXIMUM 5 ITEMS IN BASKET EACH ITEM IN FORM SIZE:NAME:PRICE
     basket_contents_1=basket_contents.filter(['tsac_id', 0, 1, 2])
@@ -45,6 +55,7 @@ def read_basket_from_csv(csvfile):
     basket_contents=basket_contents.dropna()   
     # FOR CREATING THE ORDER TABLE MERGER
     basket_contents=basket_contents.sort_values(by=['tsac_id'])  
+
     basket_contents=basket_contents.reset_index(drop=True)
 
     return basket_contents
@@ -60,7 +71,7 @@ def prod_tbl(csvfile):
     return product    
 
 def location_tbl(csvfile):
-    df=read_unf(csvfile)
+    
     location=df.filter(['location']).drop_duplicates()
     location=location.reset_index(drop=True)
     location.columns=['l_name']
@@ -68,8 +79,6 @@ def location_tbl(csvfile):
     return location 
 
 def transac_tbl(csvfile):
-
-    df=read_unf(csvfile)
 
     location=location_tbl(csvfile)
     #MERGE LOCATIONS TO TRANSACTIONS SO WE CAN SPLIT TRANSACTIONS BY THE CAFE'S (IN FUTURE)
@@ -79,23 +88,22 @@ def transac_tbl(csvfile):
 
 def order_tbl(csvfile):
 
-    df = read_unf(csvfile)
     basket_contents = read_basket_from_csv(csvfile)
     product = prod_tbl(csvfile)
     
     #TABLE MERGERS
-    the_orders=(pd.merge(basket_contents, product, left_on=['size','item','price'], right_on=['size','item','price'], how='left')).drop(['item','size','price'], axis=1)
+    the_orders=(pd.merge(basket_contents, product, left_on=['size','item','price'],
+    right_on=['size','item','price'], how='left')).drop(['item','size','price'], axis=1)
 
     date_time=df.filter(['tsac_id','date_time'])
-    #TODO ISSUE WITH HOW THE DATETIME GETS VIEWED, 
-    #NOTE: CHANGING THE 'HOW' SHIFTS WHICH COLUMN DISPLAYS 'NaT' FROM DATETIME-P_ID 
-    #FROM how='left' to how='right'
     the_orders=(pd.merge(the_orders, date_time, left_on='tsac_id', right_on='tsac_id', how='left'))
 
     return the_orders
-    
-file_a = 'mainfile.csv'
+
+
 print(order_tbl(file_a))
-#print(prod_tbl())
+#print(prod_tbl(file_a))
 #print(read_unf('mainfile.csv'))
 #print(transac_tbl(file_a))
+
+#TODO for script line 23 needs to take same argument as csvfile 
