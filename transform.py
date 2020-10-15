@@ -10,12 +10,12 @@ def transform_row(row):
         items = np.array_split(basket, len(basket)/3)
         for part in items:
             #print(part)
-            item.append([{'size':part[0], 'name':part[1], 'price':part[2]}])
+            item.append({'size':part[0], 'name':part[1], 'price':part[2]})
             #item.update 
             #print(item)          
         clean =[row[0],row[1], item, row[4], row[5]]
         #print(clean[2['size']])
-        return clean
+        return clean 
 
 def transform_rows(data):
     
