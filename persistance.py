@@ -48,7 +48,6 @@ def remove_duplicates_from_table():
 
     mycursor.execute(removeDupProductQuery, multi=True)
     mydb.commit()
-
     mycursor.close()
     mydb.close()
 
@@ -59,3 +58,6 @@ def remove_duplicates_from_table():
     GROUP BY(size, item, price);
     DROP TABLE Product;
     ALTER TABLE tmp RENAME TO Product; """
+
+
+"""insert ignore"""

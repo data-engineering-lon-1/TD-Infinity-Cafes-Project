@@ -14,12 +14,13 @@ def read_unf(csvfile):
         print("ERROR: csv file cannot be found")
 
     #ASSIGNING RANDOM ID'S FOR EACH TRANSACTION
-    df['tsac_id']=[uuid.uuid4() for _ in range(len(df.index))] #df.index 
+    #df['tsac_id']=[uuid.uuid4() for _ in range(len(df.index))] #df.index 
     df['date_time'] = pd.to_datetime(df['date_time'])
     #df.index = df['date_time']
 
     return df
 
+#SETS THE UUIDS ONCE SO ALL DATA MATCHES 
 df=read_unf(file_a)
 
 def concat(csvfile):
@@ -107,3 +108,5 @@ print(order_tbl(file_a))
 #print(transac_tbl(file_a))
 
 #TODO for script line 23 needs to take same argument as csvfile 
+
+
