@@ -26,36 +26,29 @@ def transform_rows(data):
         cleaned_rows.append(transform_row(row))
 
     return cleaned_rows
-#     #print(cleaned_row)
-#     product_list=[]
-#     for row in cleaned_row:
-#             basket = row[2].split(',')
-#             product_list.append(basket)
-
-#     for item in product_list:
-#             product = [item[0], item[1], item[2]]
-
-#     return [cleaned_row[0:2], product, cleaned_row[-2:]]
-
-
-
-
 #pprint.pprint(transform_rows(data))
+
+
+
+#below is my just trying to work out how i will be able to load
+#the products in the basket by referecncing the dicts inside the
+#list
 
 t_rows = transform_rows(data)
 single_row = t_rows[2]
 basket = single_row[2]
-print(basket)
+#print(basket)
 # #print(p[0]['name'])
 newDict = {}
 
-"""for p in basket:
-    newDict.update(p)
+for p in basket:
+    print(p['name'])
+    #newDict.update([p])
+#print(newDict)
+# prod =newDict
 
-prod =newDict
-
-print(prod) """
-
+# print(prod) """
+"""
 for p in basket:
     for idx in range(0, len(basket)-1):
         newDict.update(p[idx])
@@ -65,3 +58,4 @@ prod =newDict
 
 # print(p['price'])
 #transform_rows(data)
+"""
