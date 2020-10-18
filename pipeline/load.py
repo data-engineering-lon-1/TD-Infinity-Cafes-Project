@@ -53,7 +53,7 @@ def load_product_row(row):
         id_dict.update(prod)
         
     return id_dict
-        
+    
 
    
 
