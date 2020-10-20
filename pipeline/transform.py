@@ -13,7 +13,7 @@ def transform_row(row):
 
         for part in items:
             
-            item.append({'size':part[0], 'name':part[1], 'price':part[2]})
+            item.append({'size':str(part[0]), 'name':str(part[1]), 'price':part[2]})
                      
         clean =[d_time,row[1], item, row[4], row[5]]
 

@@ -16,14 +16,16 @@ def connection(database: str):
     except:
         print("DB Error, Database not found")
 
-def update(mydb: object, sql: str, data):
+def update(sql, data):
+    mydb = connection("CapsuleCorp")
     mycursor = mydb.cursor()
     mycursor.execute(sql, data)
     mydb.commit()
     mycursor.close()
     mydb.close()
 
-def query(mydb: object, sql):
+def query(sql):
+    mydb = connection("CapsuleCorp")
     mycursor = mydb.cursor()
     mycursor.execute(sql)
     query = mycursor.fetchall()
