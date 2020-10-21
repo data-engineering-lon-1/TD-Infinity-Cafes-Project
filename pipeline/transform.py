@@ -1,9 +1,11 @@
 from pipeline.extract import read_unf_csv
+from lambda_f import read_data_from_s3
 import numpy as np
 import pprint
 import time
 
-data = read_unf_csv('mainfile.csv')
+data = read_data_from_s3()
+
 def transform_row(row):
         clean = []
         item = []

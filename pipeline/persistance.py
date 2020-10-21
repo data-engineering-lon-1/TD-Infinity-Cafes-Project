@@ -3,9 +3,9 @@ import os
 
 from dotenv import load_dotenv
 load_dotenv()
+from lambda_f import connect_to_rds
 
-
-def connection(database: str):
+'''def connection(database: str):
     port = os.environ.get("mysql_port")
     user = os.environ.get("mysql_user")
     password = os.environ.get("mysql_password")
@@ -14,10 +14,10 @@ def connection(database: str):
         port=port, user=user, password=password, database=database
         )
     except:
-        print("DB Error, Database not found")
+        print("DB Error, Database not found")'''
 
 def update(sql, data):
-    mydb = connection("CapsuleCorp")
+    mydb = connect_to_rds()
     mycursor = mydb.cursor()
     mycursor.execute(sql, data)
     mydb.commit()
@@ -25,7 +25,7 @@ def update(sql, data):
     mydb.close()
 
 def query(sql):
-    mydb = connection("CapsuleCorp")
+    mydb = connect_to_rds()
     mycursor = mydb.cursor()
     mycursor.execute(sql)
     query = mycursor.fetchall()
