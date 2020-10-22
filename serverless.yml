@@ -1,0 +1,40 @@
+service: datum-serverless
+frameworkVersion: '2'
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-python-requirements
+
+provider:
+  name: aws
+  runtime: python3.8
+  profile: learner
+  stage: dev
+  region: eu-west-1
+
+  role: arn:aws:iam::353676217514:role/LambdaExecuteRole
+  
+  vpc:
+    securityGroupIds:
+      - sg-022819bef83110bea
+    subnetIds:
+      - subnet-0f37ee489a186d9a5
+      - subnet-0240f67155c6bd934
+      - subnet-0ca1a4a748dc923ee
+
+functions:
+  etl:
+    handler: handler.etl
+    events:
+      - s3: 
+          bucket: ${env:BUCKET}
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: incoming/
+            - suffix: .csv
+    timeout: 240
+
+package:
+  exclude:
+      - node_modules/**
+      - .venv/**
+      - docker/**

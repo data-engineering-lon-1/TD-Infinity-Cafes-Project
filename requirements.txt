@@ -1,0 +1,6 @@
+boto3
+numpy==1.19.2
+PyMySQL==0.10.1
+python-dateutil==2.8.1
+python-dotenv==0.14.0
+
