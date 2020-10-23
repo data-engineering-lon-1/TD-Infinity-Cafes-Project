@@ -1,8 +1,8 @@
 import os
 import pymysql
 import sys
-import logger
-
+import logging
+logger = logging.getLogger()
 from dotenv import load_dotenv
 load_dotenv()
 

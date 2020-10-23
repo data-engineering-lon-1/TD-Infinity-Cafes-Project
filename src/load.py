@@ -1,5 +1,5 @@
 from src.extract import read_data_from_s3
-from src.transform import transform_rows, transform_row, data
+from src.transform import transform_rows, transform_row
 from src.persistance import query, update, connect_to_rds
 import uuid
 
@@ -22,7 +22,7 @@ def load_location_row(row):
 
 def load_transaction_row(row, l_id):
 
-    updateDbQuery = "INSERT INTO Transaction (id, date_time, l_id, payment_type, total) VALUES (%s, %s, %s, %s, %s)"
+    updateDbQuery = "INSERT INTO Transactions (id, date_time, l_id, payment_type, total) VALUES (%s, %s, %s, %s, %s)"
     tsac_id = str(uuid.uuid4())
     date_time = row[0]
     payment_type = row[3]
