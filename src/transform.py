@@ -5,7 +5,7 @@ import numpy as np
 def transform_row(row):
     clean = []
     item = []
-    d_time = int(time.mktime(time.strptime(row[0], "%d/%m/%Y %H:%M")))
+    d_time = int(time.mktime(time.strptime(row[0], "%Y-%m-%d %H:%M:%S")))
     basket = row[3].split(",")
     items = np.array_split(basket, len(basket) / 3)
 
