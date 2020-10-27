@@ -10,7 +10,6 @@ provider:
   runtime: python3.8
   stage: dev
   region: eu-west-1
-  profile: learner
   role: arn:aws:iam::353676217514:role/LambdaExecuteRole
   vpc:
     securityGroupIds:
