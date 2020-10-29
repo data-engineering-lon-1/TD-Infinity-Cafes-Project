@@ -3,8 +3,6 @@ import pymysql
 import sys
 import logging
 logger = logging.getLogger()
-from dotenv import load_dotenv
-load_dotenv()
 
 def connect_to_rds():
     rds_endpoint  = os.environ.get('RDS_endpoint')

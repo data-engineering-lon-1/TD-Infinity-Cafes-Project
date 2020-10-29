@@ -1,7 +1,6 @@
 service: datum-serverless
 plugins:
   - serverless-python-requirements
-  - serverless-dotenv-plugin
 
 frameworkVersion: "2"
 
@@ -19,17 +18,40 @@ provider:
       #- subnet-0240f67155c6bd934
       - subnet-0ca1a4a748dc923ee
 
+# resources:
+#   Resources:
+#     RDSInstance:
+#       Type: AWS::RDS::DBInstance
+#       Properties:
+#         AllocatedStorage: "100"
+#         AutoMinorVersionUpgrade: true
+#         AvailabilityZone: eu-west-1
+#         DBInstanceClass: db.t2.micro
+#         DBInstanceIdentifier: MySQL
+#         DBName: "testrds"
+#         DBSubnetGroupName:
+#           Ref: "vpc1-pvt-subnet-group"
+#         Engine: MySQL
+#         PubliclyAccessible: false
+#         VPCSecurityGroups:
+#           - Ref: "test-db-sc (sg-0b78ed4648104a611)"
+
+
 functions:
   execute:
     handler: handler.etl
     events:
       - s3:
-          bucket: ${env:BUCKET}
+          bucket: ${ env:BUCKET }
           event: s3:ObjectCreated:*
           rules:
             - prefix: incoming/
             - suffix: .csv
     timeout: 100
+    environment:
+      DB_PASS: ${ env:DB_PASS }
+      DB_USER: ${ env:DB_USER }
+      RDS_ENDPOINT: ${ env:RDS_ENDPOINT }
 
 package:
   exclude:

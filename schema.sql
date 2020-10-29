@@ -10,7 +10,7 @@ CREATE TABLE Product (
   `price` decimal(15,2) NOT NULL,
   CONSTRAINT product_pk PRIMARY KEY (id));
 
-CREATE TABLE Transaction (
+CREATE TABLE Transactions (
   `id` varchar(50) NOT NULL,
   `date_time` int NOT NULL,
   `l_id` varchar(50) NOT NULL,
@@ -28,6 +28,6 @@ CREATE TABLE Orders (
   `price` decimal(15,2) NOT NULL,
   CONSTRAINT table_pk PRIMARY KEY (id),
   CONSTRAINT transaction_fk FOREIGN KEY (tsac_id)
-  REFERENCES Transaction(id),
+  REFERENCES Transactions(id),
   CONSTRAINT product_fk FOREIGN KEY (prod_id)
   REFERENCES Product(id));
