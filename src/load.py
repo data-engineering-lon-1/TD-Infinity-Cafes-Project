@@ -9,13 +9,14 @@ def load_location_row(row):
 
     checkDbQuery = f"""SELECT id from Location WHERE l_name ='{location_name}'"""
     updateDbQuery = "INSERT INTO Location (id, l_name) VALUES (%s, %s)"
-
+    #EXECUTE CHECK QUERY
     check = query(checkDbQuery)
-
+    #IF CHECK QUERY RETURNS NOTHING THEN ASSIGN ID AND UPDATE DATABASE WITH NEW ENTRY
     if len(check) == 0:
         l_id = str(uuid.uuid4())
         update(updateDbQuery, (l_id, location_name))
     else:
+        #IF QUERY RETURNS RESULT ASSIGN 1ST VALUE IN 1ST COLUMN TO THE ID
         l_id = check[0][0]
     
     return l_id
@@ -44,11 +45,14 @@ def load_product_row(row):
         price = float(product['price'])
         checkDbQuery = f"SELECT id from Product WHERE size ='{size}' AND name ='{name}' AND price ={price}"
         check = query(checkDbQuery)
+        #IF CHECK QUERY RETURNS NOTHING THEN ASSIGN ID AND UPDATE DATABASE WITH NEW ENTRY
         if len(check) == 0:
             p_id = str(uuid.uuid4())
             update(updateDbQuery, (p_id, size, name, price))
         else:
+            #IF QUERY RETURNS RESULT ASSIGN 1ST VALUE IN 1ST COLUMN TO THE ID
             p_id = check[0][0]
+        #CREATE DICT OF PRODUCT ID AND PRODUCT PRICE FOR ORDERS TABLE
         prod = {p_id: price}
         id_dict.update(prod)
         
@@ -60,14 +64,19 @@ def load_orders_row(d_time, tsac_id, p_id, price):
     update(updateDbQuery, (d_time, tsac_id, p_id, price))
 
 def load_by_row(t_data):
-
+    #GOING THROUGH THE TRANSFORMED DATA AND LOADING IT ONE ROW
+    #AT A TIME
     for row in t_data:
 
+        #CHECK/UPDATE LOCATION,TRANSACTIONS AND PRODUCT TABLE'S
+        #AND RETURN THEIR ID'S TO POPULATE THE ORDERS TABLE
         date = row[0]
         l_id = load_location_row(row)
         tsac_id = load_transaction_row(row, l_id)
         id_list = load_product_row(row)
 
+        #USING THE PRODUCT ID DICTIONARY TO INDIVIDUALLY ADD 
+        #EACH PRODUCT IN THE BASKET INTO THE ORDERS TABLE
         for p_id, price in id_list.items():
 
             load_orders_row(date, tsac_id, p_id, price)
