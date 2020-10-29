@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger()
 
 def connect_to_rds():
-    rds_endpoint  = os.environ.get('RDS_endpoint')
+    rds_endpoint = os.environ.get('RDS_ENDPOINT')
     db_user = os.environ.get('DB_USER')
     db_password = os.environ.get('DB_PASS')
     db_name = "Transactions_Prod" 
