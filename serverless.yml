@@ -58,3 +58,5 @@ package:
     - node_modules/**
     - .venv/**
     - .vscode/**
+    - charlie-de-lon-key.pem
+    - "**/.pyc"
