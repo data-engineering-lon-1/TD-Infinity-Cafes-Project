@@ -1,6 +1,6 @@
 from src.transform import transform_rows
 from src.load import load_by_row
-from src.extract import read_data_from_s3, extract_from_csv
+from src.extract import read_data_from_s3
 import json
 
 

@@ -2,6 +2,7 @@ import csv
 import json
 import boto3
 
+
 def read_data_from_s3(event):
     s3_event = event["Records"][0]["s3"]
     bucket = s3_event["bucket"]["name"]
@@ -9,20 +10,12 @@ def read_data_from_s3(event):
 
     s3 = boto3.resource("s3")
     s3_object = s3.Object(bucket, s3_and_key)
-    
+
     data = s3_object.get()["Body"].read().decode("utf-8").splitlines()
     reader = csv.reader(data)
 
     raw = []
     for row in reader:
         raw.append(row)
-    
-    return raw
 
-def extract_from_csv(file_name):
-    data = []
-    with open(f"{file_name}", "r", newline="\n") as csvfile:
-        rows = csv.reader(csvfile)
-        for row in rows:
-            data.append(row)
-    return data
+    return raw
