@@ -3,7 +3,7 @@ sys.path.append('.')
 #from src.extract import read_data_from_s3
 from src.transform import transform_rows, transform_row
 from src.persistance import query, update, connect_to_rds
-from src.load import load_location_row
+from src.load import load_location_row, load_transaction_row
 import uuid
 import unittest
 from unittest import TestCase
@@ -43,9 +43,9 @@ class TestLoad(unittest.TestCase):
         expected = '123456'
         actual = load_location_row(data, mock_query, mock_update)
         
-        mock_update.assert_called()
+        #mock_update.assert_called()
         mock_update.assert_called_once()
-        mock_update.assert_called_with("INSERT INTO Location (id, l_name) VALUES (%s, %s)", ('12345', 'Isle of Wight'))
+        mock_update.assert_called_with("INSERT INTO Location (id, l_name) VALUES (%s, %s)", ('123456', 'Isle of Wight'))
 
         mock_query.assert_called()
         mock_query.assert_called_once()
@@ -54,15 +54,39 @@ class TestLoad(unittest.TestCase):
         
 
     
+    @patch('uuid.uuid4', return_value = '123456789')
+    def test_load_transaction_row(self, mock_uuid):
 
-    def test_load_transaction_row(self):
-        pass
+        l_id = '123456'
 
+        mock_update = Mock()
+        mock_update.return_value = None
+
+        expected = '123456789'
+        actual = load_transaction_row(data, l_id, mock_update)
+    
+        mock_update.assert_called()
+        mock_update.assert_called_with("INSERT INTO Transactions (id, date_time, l_id, payment_type, total) VALUES (%s, %s, %s, %s, %s)", ('123456789', 1601539200, l_id, 'CARD', 10.9 ))
+
+        self.assertEqual(expected, actual)
+
+    @patch('uuid.uuid4', return_value = '987654321')
     def test_load_product_row(self):
+        # mock_update = Mock()
+        # mock_query = Mock()
+
+        # mock_query.return_value = None
+
+        # mock_update.assert_called()
+        # mock_update.assert_called_once()
+
+        # mock_query.assert_called()
+        # mock_query.assert_called_once()
         pass
 
-    def test_load_by_row(self):
+    def test_order_by_row(self):
         pass
+
 
 
 

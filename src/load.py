@@ -21,7 +21,7 @@ def load_location_row(row, query, update):
     
     return l_id
 
-def load_transaction_row(row, l_id):
+def load_transaction_row(row, l_id, update):
 
     updateDbQuery = "INSERT INTO Transactions (id, date_time, l_id, payment_type, total) VALUES (%s, %s, %s, %s, %s)"
     tsac_id = str(uuid.uuid4())
