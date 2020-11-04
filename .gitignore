@@ -133,3 +133,4 @@ node_modules
 
 *.pem
 .serverless
+mysql

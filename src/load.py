@@ -3,7 +3,7 @@ from src.transform import transform_rows, transform_row
 from src.persistance import query, update, connect_to_rds
 import uuid
 
-def load_location_row(row):
+def load_location_row(row, query, update):
     l_id = None
     location_name = row[1]
 
@@ -11,8 +11,9 @@ def load_location_row(row):
     updateDbQuery = "INSERT INTO Location (id, l_name) VALUES (%s, %s)"
 
     check = query(checkDbQuery)
+    
 
-    if len(check) == 0:
+    if check == []:
         l_id = str(uuid.uuid4())
         update(updateDbQuery, (l_id, location_name))
     else:
