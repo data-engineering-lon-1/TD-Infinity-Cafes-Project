@@ -3,6 +3,7 @@ from src.transform import transform_rows, transform_row
 from src.persistance import query, update, connect_to_rds
 import uuid
 
+
 def load_location_row(row, query, update):
     l_id = None
     location_name = row[1]
@@ -11,15 +12,15 @@ def load_location_row(row, query, update):
     updateDbQuery = "INSERT INTO Location (id, l_name) VALUES (%s, %s)"
 
     check = query(checkDbQuery)
-    
 
     if check == []:
         l_id = str(uuid.uuid4())
         update(updateDbQuery, (l_id, location_name))
     else:
         l_id = check[0][0]
-    
+
     return l_id
+
 
 def load_transaction_row(row, l_id, update):
 
@@ -32,6 +33,7 @@ def load_transaction_row(row, l_id, update):
     update(updateDbQuery, (tsac_id, date_time, l_id, payment_type, float(total)))
 
     return tsac_id
+
 
 def load_product_row(row):
     p_id = None
@@ -52,26 +54,25 @@ def load_product_row(row):
             p_id = check[0][0]
         prod = {p_id: price}
         id_dict.update(prod)
-        
+
     return id_dict
+
 
 def load_orders_row(d_time, tsac_id, p_id, price):
     updateDbQuery = "INSERT INTO Orders (date_time, tsac_id, prod_id, price) VALUES (%s, %s, %s, %s)"
 
     update(updateDbQuery, (d_time, tsac_id, p_id, price))
 
+
 def load_by_row(t_data):
 
     for row in t_data:
 
         date = row[0]
-        l_id = load_location_row(row)
-        tsac_id = load_transaction_row(row, l_id)
+        l_id = load_location_row(row, query, update)
+        tsac_id = load_transaction_row(row, l_id, update)
         id_list = load_product_row(row)
 
         for p_id, price in id_list.items():
 
             load_orders_row(date, tsac_id, p_id, price)
-
-        
-
