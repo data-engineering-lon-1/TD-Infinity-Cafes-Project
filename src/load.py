@@ -50,7 +50,7 @@ def load_product_row(row, query, update):
             p_id = str(uuid.uuid4())
             update(updateDbQuery, (p_id, size, name, price))
         else:
-            p_id = check[0]
+            p_id = check[0][0]
         prod = {p_id: price}
         id_dict.update(prod)
         
@@ -66,8 +66,8 @@ def load_by_row(t_data):
     for row in t_data:
 
         date = row[0]
-        l_id = load_location_row(row)
-        tsac_id = load_transaction_row(row, l_id)
+        l_id = load_location_row(row, query, update)
+        tsac_id = load_transaction_row(row, l_id, update)
         id_list = load_product_row(row)
 
         for p_id, price in id_list.items():
