@@ -2,7 +2,6 @@ import csv
 import json
 import boto3
 
-
 def read_data_from_s3(event):
     s3_event = event["Records"][0]["s3"]
     bucket = s3_event["bucket"]["name"]

@@ -56,7 +56,6 @@ class TestTransfom(unittest.TestCase):
                         
                     ]
 
-
     def test_transform_row(self):
         
         expected_1 = [
@@ -91,21 +90,19 @@ class TestTransfom(unittest.TestCase):
         self.assertEqual(expected_1, actual_1)
         self.assertEqual(expected_2, actual_2)
 
-
-
     def test_transform_rows(self):
 
         expected = [
             [
                 1601539560,
-                 'Isle of Wight',
-                  [
-                      {'size': 'Large', 'name': 'Flavoured hot chocolate - Caramel', 'price': '2.9'}, 
-                      {'size': 'Regular', 'name': 'Flavoured hot chocolate - Hazelnut', 'price': '2.6'}, 
-                      {'size': 'Large', 'name': 'Flavoured latte - Gingerbread', 'price': '2.85'}, 
-                      {'size': '', 'name': 'Red Label tea', 'price': '1.2'}, 
-                      {'size': '', 'name': 'Flat white', 'price': '2.15'}
-                      ], 
+                'Isle of Wight',
+                [
+                    {'size': 'Large', 'name': 'Flavoured hot chocolate - Caramel', 'price': '2.9'}, 
+                    {'size': 'Regular', 'name': 'Flavoured hot chocolate - Hazelnut', 'price': '2.6'}, 
+                    {'size': 'Large', 'name': 'Flavoured latte - Gingerbread', 'price': '2.85'}, 
+                    {'size': '', 'name': 'Red Label tea', 'price': '1.2'}, 
+                    {'size': '', 'name': 'Flat white', 'price': '2.15'}
+                    ], 
                  'CARD', 
                  '11.70'
                  ], 

@@ -16,7 +16,6 @@ def transform_row(row):
 
     return clean
 
-
 def transform_rows(data):
     cleaned_rows = []
 
