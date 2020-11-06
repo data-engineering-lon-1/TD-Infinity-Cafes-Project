@@ -1,7 +1,6 @@
 import time
 import numpy as np
 
-
 def transform_row(row):
     clean = []
     item = []

@@ -8,9 +8,6 @@ import unittest
 from unittest import TestCase
 from unittest.mock import Mock, patch
 
-
-
-
 data = [
     1601539200,
     'Isle of Wight',
@@ -24,7 +21,6 @@ data = [
     'CARD',
     '10.90'
 ]
-
 
 class TestLoad(unittest.TestCase):
     def setUp(self):
@@ -59,7 +55,6 @@ class TestLoad(unittest.TestCase):
 
         self.assertEqual(expected, actual)
         
-    
     @patch('uuid.uuid4', return_value = '123456789')
     def test_load_transaction_row(self, mock_uuid):
 
@@ -77,7 +72,6 @@ class TestLoad(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-
     @patch('uuid.uuid4', return_value = '9876')
     def test_load_product_row(self, mock_uuid):
         
@@ -91,7 +85,6 @@ class TestLoad(unittest.TestCase):
         actual = load_product_row(data, mock_query, mock_update)
 
         self.assertEqual(expected, actual)
-
 
 
     @patch('src.load.load_orders_row')

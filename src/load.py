@@ -73,6 +73,3 @@ def load_by_row(t_data):
         for p_id, price in id_list.items():
 
             load_orders_row(date, tsac_id, p_id, price)
-
-        
-

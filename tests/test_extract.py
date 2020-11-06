@@ -6,7 +6,6 @@ import csv
 import json
 import boto3
 
-
 class TestExtract(unittest.TestCase):
     def setUp(self):
         self.test_event = {
