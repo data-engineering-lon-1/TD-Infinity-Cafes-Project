@@ -97,7 +97,7 @@ class TestLoad(unittest.TestCase):
 
         mock_location.assert_called_with(self.t_data[0], query, update)
         mock_transaction.assert_called_with(self.t_data[0], '123', update)
-        mock_product.assert_called_with(self.t_data[0])
+        mock_product.assert_called_with(self.t_data[0], query, update)
         mock_orders.assert_called_with(1604599325, '234', '345', 3.5)
 
 

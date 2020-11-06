@@ -68,7 +68,7 @@ def load_by_row(t_data):
         date = row[0]
         l_id = load_location_row(row, query, update)
         tsac_id = load_transaction_row(row, l_id, update)
-        id_list = load_product_row(row)
+        id_list = load_product_row(row, query, update)
 
         for p_id, price in id_list.items():
 
