@@ -1,4 +1,4 @@
-# Infinity Cafes Projects
+# Infinity Cafes Project
 
 
 
