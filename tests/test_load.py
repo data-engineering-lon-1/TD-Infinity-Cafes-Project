@@ -22,6 +22,18 @@ data = [
     '10.90'
 ]
 
+data2 = [
+    1601539200,
+    'Isle of Wight',
+    [
+        {'size': 'Large', 'name': 'Filter coffee', 'price': '1.8'}
+    ],
+    'CARD',
+    '10.90'
+]
+
+
+
 class TestLoad(unittest.TestCase):
     def setUp(self):
         self.t_data = [[1604599325, 'Horwich Green', [{'size': '', 'name': 'Glass of milk', 'price': '0.7'}, {'size': '', 'name': 'Glass of milk', 'price': '0.7'}, {
@@ -81,8 +93,8 @@ class TestLoad(unittest.TestCase):
         mock_query.return_value = None
         mock_update.return_value = None
 
-        expected = {'9876': 2.3, '9876': 1.3, '9876': 2.75, '9876': 2.75,'9876': 1.8}
-        actual = load_product_row(data, mock_query, mock_update)
+        expected = {'9876': 1.8}
+        actual = load_product_row(data2, mock_query, mock_update)
 
         self.assertEqual(expected, actual)
 
