@@ -1,5 +1,4 @@
-# Team-NicSquared
-
+# Infinity Cafes Projects
 
 
 
