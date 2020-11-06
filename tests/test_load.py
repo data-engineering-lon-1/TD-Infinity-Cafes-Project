@@ -3,7 +3,7 @@ sys.path.append('.')
 #from src.extract import read_data_from_s3
 from src.transform import transform_rows, transform_row
 from src.persistance import query, update, connect_to_rds
-from src.load import load_location_row, load_transaction_row
+from src.load import load_location_row, load_transaction_row, load_product_row
 import uuid
 import unittest
 from unittest import TestCase
@@ -26,7 +26,6 @@ data = [
 
 class TestLoad(unittest.TestCase):
     
-    
    # @mock.patch('src.load.update', return_value = None)
    # @mock.patch('src.load.query', return_value = [])
     @patch('uuid.uuid4', return_value = '123456')
@@ -45,14 +44,19 @@ class TestLoad(unittest.TestCase):
         
         #mock_update.assert_called()
         mock_update.assert_called_once()
-        mock_update.assert_called_with("INSERT INTO Location (id, l_name) VALUES (%s, %s)", ('123456', 'Isle of Wight'))
+        mock_update.assert_called_with(
+            "INSERT INTO Location (id, l_name) VALUES (%s, %s)", 
+            (
+                '123456', 
+                'Isle of Wight'
+                )
+            )
 
         mock_query.assert_called()
         mock_query.assert_called_once()
 
         self.assertEqual(expected, actual)
         
-
     
     @patch('uuid.uuid4', return_value = '123456789')
     def test_load_transaction_row(self, mock_uuid):
@@ -70,21 +74,26 @@ class TestLoad(unittest.TestCase):
 
         self.assertEqual(expected, actual)
 
-    @patch('uuid.uuid4', return_value = '987654321')
-    def test_load_product_row(self):
-        # mock_update = Mock()
-        # mock_query = Mock()
 
-        # mock_query.return_value = None
+    @patch('uuid.uuid4', return_value = '9876')
+    def test_load_product_row(self, mock_uuid):
+        
+        mock_query = Mock()
+        mock_update = Mock()
 
-        # mock_update.assert_called()
-        # mock_update.assert_called_once()
+        mock_query.return_value = None
+        mock_update.return_value = None
 
-        # mock_query.assert_called()
-        # mock_query.assert_called_once()
-        pass
+        expected = {'9876': 2.3, '9876': 1.3, '9876': 2.75, '9876': 2.75,'9876': 1.8}
+        actual = load_product_row(data, mock_query, mock_update)
 
-    def test_order_by_row(self):
+        self.assertEqual(expected, actual)
+
+
+
+
+    def test_orders_row(self):
+
         pass
 
 

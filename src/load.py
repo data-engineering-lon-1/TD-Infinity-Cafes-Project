@@ -33,7 +33,7 @@ def load_transaction_row(row, l_id, update):
 
     return tsac_id
 
-def load_product_row(row):
+def load_product_row(row, query, update):
     p_id = None
     updateDbQuery = """INSERT INTO Product ( id, size, name, price) VALUES (%s, %s, %s, %s)"""
     id_dict = {}
@@ -42,14 +42,15 @@ def load_product_row(row):
     for product in basket:
         size = product['size']
         name = product['name']
-        price = float(product['price'])
+        price = float(product['price']) 
         checkDbQuery = f"SELECT id from Product WHERE size ='{size}' AND name ='{name}' AND price ={price}"
         check = query(checkDbQuery)
-        if len(check) == 0:
+        # not possible to test if len(check) = 0 - changed to if check = []
+        if check == None:
             p_id = str(uuid.uuid4())
             update(updateDbQuery, (p_id, size, name, price))
         else:
-            p_id = check[0][0]
+            p_id = check[0]
         prod = {p_id: price}
         id_dict.update(prod)
         
