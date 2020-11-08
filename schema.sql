@@ -1,3 +1,7 @@
+CREATE DATABASE Transactions_Prod;
+
+USE Transactions_Prod;
+
 CREATE TABLE Location (
   `id` varchar(50) NOT NULL,
   `l_name` varchar(100) NOT NULL,
