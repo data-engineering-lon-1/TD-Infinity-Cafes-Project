@@ -10,7 +10,7 @@ CREATE TABLE Product (
   `price` decimal(15,2) NOT NULL,
   CONSTRAINT product_pk PRIMARY KEY (id));
 
-CREATE TABLE Transaction (
+CREATE TABLE Transactions (
   `id` varchar(50) NOT NULL,
   `date_time` int NOT NULL,
   `l_id` varchar(50) NOT NULL,
